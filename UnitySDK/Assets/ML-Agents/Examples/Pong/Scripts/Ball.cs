@@ -9,8 +9,8 @@ public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        // Always starts by moving the ball towards the middle.
-        float sx = isBall1 ? 1 : -1;
+        // All start directions are random to make things fair.
+        float sx = Random.Range(0, 2) == 0 ? -1 : 1;
         float sy = Random.Range(0, 2) == 0 ? -1 : 1;
 
         GetComponent<Rigidbody>().velocity = new Vector3(speed * sx, speed * sy, 0f);
@@ -35,11 +35,6 @@ public class Ball : MonoBehaviour {
         else if(collision.gameObject.name == "Paddle2")
         {
             lastHitBy = 2;
-        }
-        // Delete obstacles if they are hit
-        else if (collision.gameObject.name == "Obstacle")
-        { 
-            Destroy(collision.gameObject);
         }
     }
 }
