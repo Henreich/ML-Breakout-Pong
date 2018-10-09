@@ -7,6 +7,9 @@ public class Ball : MonoBehaviour {
     public int lastHitBy = 0;
     public bool isBall1;
 
+    private int scorePlayer1 = 0;
+    private int scorePlayer2 = 0;
+
 	// Use this for initialization
 	void Start () {
         // All start directions are random to make things fair.
@@ -35,6 +38,19 @@ public class Ball : MonoBehaviour {
         else if(collision.gameObject.name == "Paddle2")
         {
             lastHitBy = 2;
+        } else if(collision.gameObject.name == "Wall2" && lastHitBy == 1)
+        {
+            scorePlayer1++;
+            TextMesh Score1 = GameObject.Find("Score1").GetComponent<TextMesh>();
+            Score1.text = "Score: " + scorePlayer1;
         }
+        else if (collision.gameObject.name == "Wall1" && lastHitBy == 2)
+        {
+            scorePlayer2++;
+            TextMesh Score2 = GameObject.Find("Score2").GetComponent<TextMesh>();
+            Score2.text = "Score: " + scorePlayer2;
+        }
+        TextMesh textObject = GameObject.Find("LastHitBy").GetComponent<TextMesh>();
+        textObject.text = "Last hit by: " + lastHitBy.ToString();
     }
 }
