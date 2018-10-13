@@ -5,8 +5,9 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
     public float speed = 5f;
     public int lastHitBy = 0;
-    public bool isBall1;
 
+    //private PaddleAgent agentA;
+    //private PaddleAgent agentB;
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
 
