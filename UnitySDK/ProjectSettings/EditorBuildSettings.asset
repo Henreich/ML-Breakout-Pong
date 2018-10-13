@@ -4,4 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/ML-Agents/Examples/NumberDemo/Scenes/NumberDemo.unity
+    guid: f02bccc111d7e604c86a2fd53da092c9
+  m_configObjects: {}
