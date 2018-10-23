@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
-    public float speed = 2f;
+    public float speed = 5f;
     public int lastHitBy = 0;
-    public PaddleAgent agent;
+    public PaddleAgent agentA;
+    public PaddleAgent agentB;
 
-    //private PaddleAgent agentA;
-    //private PaddleAgent agentB;
-    private int scorePlayer1 = 0;
-    private int scorePlayer2 = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -19,8 +16,6 @@ public class Ball : MonoBehaviour {
         float sy = Random.Range(0, 2) == 0 ? -1 : 1;
 
         GetComponent<Rigidbody>().velocity = new Vector3(speed * sx, speed * sy, 0f);
-
-        //agent = agent.GetComponent<PaddleAgent>();
     }
 	
 	// Update is called once per frame
@@ -31,61 +26,43 @@ public class Ball : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-
         //Debug.Log(collision.gameObject.name);
-        //Remember who touched the ball last.
-        if (collision.gameObject.name == "PaddleAgent")
+
+        switch (collision.gameObject.name)
         {
-            lastHitBy = 1;
+            case "WallA":
+                agentA.AddReward(-1f);
+                agentB.AddReward(1f);
+                agentB.score++;
+                GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
+                resetGame();
+                break;
+
+            case "WallB":   
+                agentA.AddReward(1f);
+                agentB.AddReward(-1f);
+                agentA.score++;
+                GameObject.Find("Score1").GetComponent<TextMesh>().text = "Score: " + agentA.score;
+                resetGame();
+                break;
+
+            case "PaddleAgent1":
+                agentA.AddReward(0.05f);
+                break;
+
+            case "PaddleAgent2":
+                agentB.AddReward(0.05f);
+                break;
         }
-        else if (collision.gameObject.name == "Paddle2")
-        {
-            lastHitBy = 2;
-        }
+    }
 
-        if (collision.gameObject.name == "Wall1")
-        {
-            agent.AddReward(-1f);
-        }
-        else if (collision.gameObject.name == "Wall2" && lastHitBy == 1)
-        {
-            agent.AddReward(0.5f);
-            agent.score++;
-            TextMesh Score1 = GameObject.Find("Score1").GetComponent<TextMesh>();
-            Score1.text = "Score: " + agent.score;
-        }
-        agent.Done();
+    private void resetGame()
+    {
+        // Round done, 
+        agentA.Done();
+        agentB.Done();
 
-
-
-
-
-
-
-        //// TODO: Make a switch case instead?
-
-        //// Who hit the ball last, specificlly only whenever a collision
-        //// with a paddle happens
-        //if(collision.gameObject.name == "Paddle1")
-        //{
-        //    lastHitBy = 1;
-        //}
-        //else if(collision.gameObject.name == "Paddle2")
-        //{
-        //    lastHitBy = 2;
-        //} else if(collision.gameObject.name == "Wall2" && lastHitBy == 1)
-        //{
-        //    scorePlayer1++;
-        //TextMesh Score1 = GameObject.Find("Score1").GetComponent<TextMesh>();
-        //Score1.text = "Score: " + scorePlayer1;
-        //}
-        //else if (collision.gameObject.name == "Wall1" && lastHitBy == 2)
-        //{
-        //    scorePlayer2++;
-        //    TextMesh Score2 = GameObject.Find("Score2").GetComponent<TextMesh>();
-        //    Score2.text = "Score: " + scorePlayer2;
-        //}
-        //TextMesh textObject = GameObject.Find("LastHitBy").GetComponent<TextMesh>();
-        //textObject.text = "Last hit by: " + lastHitBy.ToString();
+        // Reset ball to (0, 0, 0)
+        this.transform.position = Vector3.zero;
     }
 }

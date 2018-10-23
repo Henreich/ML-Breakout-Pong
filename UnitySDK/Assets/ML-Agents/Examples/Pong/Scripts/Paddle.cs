@@ -6,6 +6,7 @@ public class Paddle : MonoBehaviour {
     public bool isPaddle1;
     public float speed = 5f;
 
+
 	// Use this for initialization
 	void Start () {
 		

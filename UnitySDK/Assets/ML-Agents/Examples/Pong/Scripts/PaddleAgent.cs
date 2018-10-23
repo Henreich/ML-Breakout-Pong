@@ -5,8 +5,9 @@ using MLAgents;
 
 public class PaddleAgent : Agent {
     public GameObject ball;
-    public float speed = 2f;
+    public float speed = 5f;
     public int score = 0;
+    public bool isAgentA;
 
     //public GameObject opponent;
 
@@ -35,14 +36,19 @@ public class PaddleAgent : Agent {
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        Debug.Log(vectorAction[0]);
-        //Debug.Log(vectorAction[1]);
-        //agentRb.velocity = new Vector3(0f, vectorAction[0], 0f);
+        //Debug.Log(vectorAction[0]);
         transform.Translate(0f, vectorAction[0] * speed * Time.deltaTime, 0f);
-        //switch (vectorAction)
-        //{
+    }
 
-        //}
-
+    public override void AgentReset()
+    {
+        if (isAgentA)
+        {
+            this.transform.position = new Vector3(-12f, 0f, 0f);
+        } 
+        else
+        {
+            this.transform.position = new Vector3(12f, 0f, 0f);
+        }
     }
 }
