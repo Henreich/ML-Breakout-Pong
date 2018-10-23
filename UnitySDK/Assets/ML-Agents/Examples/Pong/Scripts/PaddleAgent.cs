@@ -38,6 +38,12 @@ public class PaddleAgent : Agent {
     {
         //Debug.Log(vectorAction[0]);
         transform.Translate(0f, vectorAction[0] * speed * Time.deltaTime, 0f);
+
+        // Keep the paddle within the play area
+        // Found here: http://answers.unity.com/answers/925264/view.html
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.y = Mathf.Clamp(transform.position.y, -4f, 4f);
+        transform.position = clampedPosition;
     }
 
     public override void AgentReset()
