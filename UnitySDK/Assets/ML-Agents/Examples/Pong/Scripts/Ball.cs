@@ -11,18 +11,10 @@ public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        setBallVelocity();
-        // All start directions are random to make things fair.
-        //float sx = Random.Range(0, 2) == 0 ? -1 : 1;
-        //float sy = Random.Range(0, 2) == 0 ? -1 : 1;
-
-        //GetComponent<Rigidbody>().velocity = new Vector3(speed * sx, speed * sy, 0f);
+        SetBallVelocity();
+        agentA = agentA.GetComponent<PaddleAgent>();
+        agentB = agentB.GetComponent<PaddleAgent>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
 
 
     private void OnCollisionEnter(Collision collision)
@@ -32,32 +24,32 @@ public class Ball : MonoBehaviour {
         switch (collision.gameObject.name)
         {
             case "WallA":
-                agentA.AddReward(-1f);
-                agentB.AddReward(1f);
+                agentA.AddReward(-0.1f);
+                agentB.AddReward(0.5f);
                 agentB.score++;
                 GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
-                resetGame();
+                ResetGame();
                 break;
 
-            case "WallB":   
-                agentA.AddReward(1f);
-                agentB.AddReward(-1f);
+            case "WallB":
+                agentA.AddReward(0.5f);
+                agentB.AddReward(-0.1f);
                 agentA.score++;
                 GameObject.Find("Score1").GetComponent<TextMesh>().text = "Score: " + agentA.score;
-                resetGame();
+                ResetGame();
                 break;
 
-            case "PaddleAgent1":
+            case "PaddleAgentA":
                 agentA.AddReward(0.05f);
                 break;
 
-            case "PaddleAgent2":
+            case "PaddleAgentB":
                 agentB.AddReward(0.05f);
                 break;
         }
     }
 
-    private void resetGame()
+    private void ResetGame()
     {
         // Round done, 
         agentA.Done();
@@ -65,10 +57,10 @@ public class Ball : MonoBehaviour {
 
         // Reset ball to (0, 0, 0)
         this.transform.position = Vector3.zero;
-        setBallVelocity();
+        SetBallVelocity();
     }
 
-    private void setBallVelocity()
+    private void SetBallVelocity()
     {
         float sx = Random.Range(0, 2) == 0 ? -1 : 1;
         float sy = Random.Range(0, 2) == 0 ? -1 : 1;
