@@ -6,14 +6,16 @@ public class Ball : MonoBehaviour {
     public float speed = 5f;
     public int lastHitBy = 0;
     public PaddleAgent agentA;
-    public PaddleAgent agentB;
+    //public PaddleAgent agentB;
+    public Vector3 startPos;
 
 
 	// Use this for initialization
 	void Start () {
         SetBallVelocity();
         agentA = agentA.GetComponent<PaddleAgent>();
-        agentB = agentB.GetComponent<PaddleAgent>();
+        //agentB = agentB.GetComponent<PaddleAgent>();
+        startPos = this.transform.position;
     }
 
 
@@ -25,27 +27,27 @@ public class Ball : MonoBehaviour {
         {
             case "WallA":
                 agentA.AddReward(-0.1f);
-                agentB.AddReward(0.5f);
-                agentB.score++;
-                GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
+                //agentB.AddReward(0.5f);
+                //agentB.score++;
+                //GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
                 ResetGame();
                 break;
 
-            case "WallB":
-                agentA.AddReward(0.5f);
-                agentB.AddReward(-0.1f);
-                agentA.score++;
-                GameObject.Find("Score1").GetComponent<TextMesh>().text = "Score: " + agentA.score;
-                ResetGame();
-                break;
+            //case "WallB":
+            //    agentA.AddReward(0.5f);
+            //    agentB.AddReward(-0.1f);
+            //    agentA.score++;
+            //    GameObject.Find("Score1").GetComponent<TextMesh>().text = "Score: " + agentA.score;
+            //    ResetGame();
+            //    break;
 
             case "PaddleAgentA":
-                agentA.AddReward(0.05f);
+                agentA.AddReward(0.3f);
                 break;
 
-            case "PaddleAgentB":
-                agentB.AddReward(0.05f);
-                break;
+            //case "PaddleAgentB":
+            //    agentB.AddReward(0.05f);
+            //    break;
         }
     }
 
@@ -53,10 +55,10 @@ public class Ball : MonoBehaviour {
     {
         // Round done, 
         agentA.Done();
-        agentB.Done();
+        //agentB.Done();
 
         // Reset ball to (0, 0, 0)
-        this.transform.position = Vector3.zero;
+        this.transform.position = startPos;
         SetBallVelocity();
     }
 

@@ -8,6 +8,7 @@ public class PaddleAgent : Agent {
     public float speed = 5f;
     public int score = 0;
     public bool isAgentA;
+    public Vector3 startPos;
 
     //public GameObject opponent;
 
@@ -18,13 +19,20 @@ public class PaddleAgent : Agent {
     {
         agentRb = GetComponent<Rigidbody>();
         ballRb = GetComponent<Rigidbody>();
+        startPos = agentRb.transform.position;
     }
 
     public override void CollectObservations()
     {
         // Relative position of the ball compared to paddle (?)
+        AddVectorObs(this.transform.position.x);
+        AddVectorObs(this.transform.position.y);
+        AddVectorObs(ball.transform.position.x);
+        AddVectorObs(ball.transform.position.y);
         AddVectorObs(this.transform.position.x - ball.transform.position.x);
         AddVectorObs(this.transform.position.y - ball.transform.position.y);
+
+
 
         // Observe the velocity of the agent.
         AddVectorObs(agentRb.velocity.y);
@@ -36,25 +44,30 @@ public class PaddleAgent : Agent {
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        //Debug.Log(vectorAction[0]);
+        //Debug.Log("action 0" + vectorAction[0]);
+        //Debug.Log("action 1" + vectorAction[1]);
+        
+
+
         transform.Translate(0f, vectorAction[0] * speed * Time.deltaTime, 0f);
 
         // Keep the paddle within the play area
         // Found here: http://answers.unity.com/answers/925264/view.html
         Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(transform.position.y, -4f, 4f);
+        clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y -4.5f, startPos.y + 4.5f);
         transform.position = clampedPosition;
     }
 
     public override void AgentReset()
     {
+    
         if (isAgentA)
         {
-            this.transform.position = new Vector3(-12f, 0f, 0f);
+            this.transform.position = new Vector3(startPos.x, startPos.y, startPos.z);
         } 
         else
         {
-            this.transform.position = new Vector3(12f, 0f, 0f);
+            this.transform.position = new Vector3(-startPos.x, startPos.y, startPos.z);
         }
     }
 }
