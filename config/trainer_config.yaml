@@ -246,7 +246,7 @@ BasicBrain:
 
 StudentBrain:
     trainer: imitation
-    max_steps: 10000
+    max_steps: 50000
     summary_freq: 1000
     brain_to_imitate: TeacherBrain
     batch_size: 16
