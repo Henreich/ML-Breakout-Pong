@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
     public Vector3 startPos;
     public int goalsLetIn = 0;
     public int ballsTouched = 0;
+    public int ballBounces = 0;
 
 
 	// Use this for initialization
@@ -24,12 +25,14 @@ public class Ball : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(collision.gameObject.name);
+        ballBounces++;
+        if (ballBounces > 15) ResetGame();
 
         switch (collision.gameObject.name)
         {
             case "WallA":
                 //Debug.Log("wallA collision");
-                agentA.AddReward(-0.5f);
+                agentA.AddReward(-0.1f);
                 //agentB.AddReward(0.5f);
                 //agentB.score++;
                 //GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
@@ -49,6 +52,7 @@ public class Ball : MonoBehaviour {
             case "PaddleAgentA":
                 //Debug.Log("agentA collision");
                 ballsTouched++;
+                ballBounces = 0;
                 agentA.AddReward(0.1f);
                 if (ballsTouched % 5 == 0) ResetGame();
                 break;
@@ -64,6 +68,7 @@ public class Ball : MonoBehaviour {
 
     private void ResetGame()
     {
+        ballBounces = 0;
         // Round done, 
         agentA.Done();
         //agentB.Done();
@@ -80,7 +85,7 @@ public class Ball : MonoBehaviour {
 
         float vX = Random.Range(0, 2) == 0 ? -1 : 1;
         float vY = Random.Range(-1f, 1f);
-        Debug.Log(vX + ", " + vY);
+        //Debug.Log(vX + ", " + vY);
 
         GetComponent<Rigidbody>().velocity = new Vector3(vX * speed, vY * speed, 0f);
     }

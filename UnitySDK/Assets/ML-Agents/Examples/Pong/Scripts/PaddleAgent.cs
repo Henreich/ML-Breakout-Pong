@@ -14,6 +14,7 @@ public class PaddleAgent : Agent {
 
     private Rigidbody agentRb;
     private Rigidbody ballRb;
+    private float distanceToEdges = 4.7f;
 
     public override void InitializeAgent()
     {
@@ -44,18 +45,11 @@ public class PaddleAgent : Agent {
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        //Debug.Log("action 0" + vectorAction[0]);
-        //Debug.Log("action 1" + vectorAction[1]);
-        
-
+        //Debug.Log(vectorAction[0]);
 
         transform.Translate(0f, vectorAction[0] * speed * Time.deltaTime, 0f);
-
-        // Keep the paddle within the play area
-        // Found here: http://answers.unity.com/answers/925264/view.html
         Vector3 clampedPosition = transform.position;
-        //clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y -4.5f, startPos.y + 4.5f);
-        clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y -11f, startPos.y + 11f);
+        clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y - distanceToEdges, startPos.y + distanceToEdges);
         transform.position = clampedPosition;
     }
 
@@ -72,3 +66,6 @@ public class PaddleAgent : Agent {
         }
     }
 }
+
+
+//clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y -11f, startPos.y + 11f);
