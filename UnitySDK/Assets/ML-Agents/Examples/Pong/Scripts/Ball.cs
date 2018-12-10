@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
+    private float timeToReset = 0; 
     public float speed = 7.5f;
     public int lastHitBy = 0;
     public PaddleAgent agentA;
@@ -21,6 +22,20 @@ public class Ball : MonoBehaviour {
         startPos = this.transform.position;
     }
 
+
+    void Update ()
+    {
+        timeToReset += Time.deltaTime;
+        if (timeToReset <= 60)
+        {
+            float seconds = Mathf.Floor(timeToReset % 60);
+            //GameObject.Find("Time").GetComponent<TextMesh>().text = "Time: " + seconds;
+        } else if (timeToReset > 60)
+        {
+            ResetGame();
+        }
+
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -54,7 +69,7 @@ public class Ball : MonoBehaviour {
                 ballsTouched++;
                 ballBounces = 0;
                 agentA.AddReward(0.1f);
-                if (ballsTouched % 5 == 0) ResetGame();
+                //if (ballsTouched % 5 == 0) ResetGame();
                 break;
 
             //case "PaddleAgentB":
@@ -68,6 +83,7 @@ public class Ball : MonoBehaviour {
 
     private void ResetGame()
     {
+        timeToReset = 0;
         ballBounces = 0;
         // Round done, 
         agentA.Done();
