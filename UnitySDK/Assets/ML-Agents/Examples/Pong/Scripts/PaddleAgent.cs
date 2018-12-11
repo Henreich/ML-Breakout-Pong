@@ -5,7 +5,7 @@ using MLAgents;
 
 public class PaddleAgent : Agent {
     public GameObject ball;
-    public float speed = 7.5f;
+    public float speed = 5f;
     public int score = 0;
     public bool isAgentA;
     public Vector3 startPos;

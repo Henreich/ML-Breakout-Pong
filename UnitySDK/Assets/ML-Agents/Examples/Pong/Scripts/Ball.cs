@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
-    private float timeToReset = 0; 
-    public float speed = 7.5f;
-    public int lastHitBy = 0;
+    private Vector3 startPos;
+    private float timeToReset = 60;
+
     public PaddleAgent agentA;
     //public PaddleAgent agentB;
-    public Vector3 startPos;
+    public float speed = 5f;
+    //public int lastHitBy = 0;
     public int goalsLetIn = 0;
     public int ballsTouched = 0;
     public int ballBounces = 0;
+    public bool playMode; // Is the game being played by a player or a model?
 
 
 	// Use this for initialization
@@ -25,29 +27,26 @@ public class Ball : MonoBehaviour {
 
     void Update ()
     {
-        timeToReset += Time.deltaTime;
-        if (timeToReset <= 60)
+        if (!playMode)
         {
-            float seconds = Mathf.Floor(timeToReset % 60);
-            //GameObject.Find("Time").GetComponent<TextMesh>().text = "Time: " + seconds;
-        } else if (timeToReset > 60)
-        {
-            ResetGame();
-        }
+            timeToReset -= Time.deltaTime;
 
+            if (timeToReset < 0) ResetGame();
+              
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(collision.gameObject.name);
         ballBounces++;
-        if (ballBounces > 15) ResetGame();
+        if (!playMode && ballBounces > 15) ResetGame();
 
         switch (collision.gameObject.name)
         {
             case "WallA":
                 //Debug.Log("wallA collision");
-                agentA.AddReward(-0.1f);
+                agentA.AddReward(-0.5f);
                 //agentB.AddReward(0.5f);
                 //agentB.score++;
                 //GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
@@ -76,14 +75,17 @@ public class Ball : MonoBehaviour {
             //    agentB.AddReward(0.05f);
             //    break;
         }
+        if (playMode)
+        {
+            GameObject.Find("Score1").GetComponent<TextMesh>().text = "Goals scored on the agent: " + goalsLetIn;
+            GameObject.Find("Score2").GetComponent<TextMesh>().text = "Ball hit since last failure: " + ballsTouched;
+        }
 
-        GameObject.Find("Score1").GetComponent<TextMesh>().text = "Goals scored on the agent: " + goalsLetIn;
-        GameObject.Find("Score2").GetComponent<TextMesh>().text = "Ball hit since last failure: " + ballsTouched;
     }
 
     private void ResetGame()
     {
-        timeToReset = 0;
+        timeToReset = 60;
         ballBounces = 0;
         // Round done, 
         agentA.Done();
