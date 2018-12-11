@@ -5,7 +5,9 @@ using MLAgents;
 
 public class PaddleAgent : Agent {
     public GameObject ball;
-    public float speed = 5f;
+    public GameObject wallTop;
+    public GameObject wallBottom;
+    public float speed;
     public int score = 0;
     public bool isAgentA;
     public Vector3 startPos;
@@ -14,7 +16,9 @@ public class PaddleAgent : Agent {
 
     private Rigidbody agentRb;
     private Rigidbody ballRb;
-    private float distanceToEdges = 4.7f;
+    //private float distanceToEdge = 4.25f; // Pong / Breakout
+    //private float distanceToEdge = 11f; // Pong Big
+    private float distanceToEdge = 9.25f; // Pong Breakout Big
 
     public override void InitializeAgent()
     {
@@ -49,7 +53,7 @@ public class PaddleAgent : Agent {
 
         transform.Translate(0f, vectorAction[0] * speed * Time.deltaTime, 0f);
         Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y - distanceToEdges, startPos.y + distanceToEdges);
+        clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y - distanceToEdge, startPos.y + distanceToEdge);
         transform.position = clampedPosition;
     }
 
@@ -68,4 +72,15 @@ public class PaddleAgent : Agent {
 }
 
 
-//clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y -11f, startPos.y + 11f);
+//clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y 4.2f, startPos.y + 4.2f);
+
+
+    // Attempt at making the clamp size relative to the top and bottom wall... Not important for the assignment, but good practise...
+//clampedPosition.y = Mathf.Clamp(transform.position.y, startPos.y - distanceToEdgeTop, startPos.y + distanceToEdgeTop);
+//float distanceToEdgeBottom = wallBottom.transform.position.y - (gameObject.transform.localScale.y / 2);
+//Debug.Log(wallBottom.transform.position.y + ", " + gameObject.transform.localScale.y);
+//float distanceToEdgeTop = wallTop.transform.position.y - (wallTop.transform.localScale.y / 2) - (gameObject.transform.localScale.y / 2);
+
+//Debug.Log(wallTop.transform.position.y + ", " + gameObject.transform.localScale.y);
+//Debug.Log("edge" + distanceToEdgeBottom);
+//Debug.Log("top" + distanceToEdgeTop);

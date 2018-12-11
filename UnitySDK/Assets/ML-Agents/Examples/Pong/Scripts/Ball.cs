@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
     private Vector3 startPos;
-    private float timeToReset = 60;
+    private Rigidbody ballRb;
+    private float timeToReset = 120;
+    private int maxBallBounces = 15;
+    private int lives = 3;
+
+    public GameObject prefabObstacle1;
+    
+    public GameObject gameobjectPaddleA;
 
     public PaddleAgent agentA;
     //public PaddleAgent agentB;
-    public float speed = 5f;
+    public float speed;
     //public int lastHitBy = 0;
     public int goalsLetIn = 0;
     public int ballsTouched = 0;
     public int ballBounces = 0;
-    public bool playMode; // Is the game being played by a player or a model?
 
+    // Flags
+    public bool playMode; // Is the game being played by a player or a model?
+    public bool breakout; // Breakout or pong?
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +31,7 @@ public class Ball : MonoBehaviour {
         agentA = agentA.GetComponent<PaddleAgent>();
         //agentB = agentB.GetComponent<PaddleAgent>();
         startPos = this.transform.position;
+        ballRb = GetComponent<Rigidbody>();
     }
 
 
@@ -38,14 +48,20 @@ public class Ball : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.name);
         ballBounces++;
-        if (!playMode && ballBounces > 15) ResetGame();
+        if (!playMode && ballBounces > maxBallBounces) ResetGame();
+        
+        string collisionObjectName = (collision.gameObject.name.StartsWith("Obstacle"))  ? "Obstacle" : collision.gameObject.name;
 
-        switch (collision.gameObject.name)
+
+        switch (collisionObjectName)
         {
             case "WallA":
-                //Debug.Log("wallA collision");
+                if (breakout)
+                {
+                    lives--;
+                    if (lives == 0) ResetGame();
+                }
                 agentA.AddReward(-0.5f);
                 //agentB.AddReward(0.5f);
                 //agentB.score++;
@@ -64,7 +80,17 @@ public class Ball : MonoBehaviour {
             //    break;
 
             case "PaddleAgentA":
-                //Debug.Log("agentA collision");
+                if (breakout)
+                {
+                    // Taken from here:  https://answers.unity.com/questions/658533/setting-the-angle-of-a-ball-in-a-breakout-game.html
+                    // Sets the velocity of the ball depending on where it collided with the paddle.
+                    Vector3 paddlePosition = gameobjectPaddleA.transform.position;
+                    Vector3 ballPosition = gameObject.transform.position;
+                    Vector3 delta = ballPosition - paddlePosition;
+                    Vector3 direction = delta.normalized;
+                    ballRb.velocity = new Vector3(direction.x * speed, direction.y * speed, 0f);
+                }
+
                 ballsTouched++;
                 ballBounces = 0;
                 agentA.AddReward(0.1f);
@@ -74,6 +100,13 @@ public class Ball : MonoBehaviour {
             //case "PaddleAgentB":
             //    agentB.AddReward(0.05f);
             //    break;
+
+            case "Obstacle":
+                Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
+                //Debug.Log(obstacle.getReward());
+                agentA.AddReward(obstacle.getReward());
+                Destroy(collision.gameObject);
+                break;
         }
         if (playMode)
         {
@@ -85,7 +118,8 @@ public class Ball : MonoBehaviour {
 
     private void ResetGame()
     {
-        timeToReset = 60;
+        timeToReset = 120;
+        lives = 3;
         ballBounces = 0;
         // Round done, 
         agentA.Done();
@@ -93,6 +127,7 @@ public class Ball : MonoBehaviour {
 
         // Reset ball to (0, 0, 0)
         this.transform.position = startPos;
+        if (lives == 0) Instantiate(prefabObstacle1, transform.position, Quaternion.identity);
         SetBallVelocity();
     }
 
@@ -100,8 +135,17 @@ public class Ball : MonoBehaviour {
     {
         //float vX = Random.Range(0, 2) == 0 ? -1 : 1;
         //float vY = Random.Range(0, 2) == 0 ? -1 : 1;
+        float vX;
 
-        float vX = Random.Range(0, 2) == 0 ? -1 : 1;
+        if(breakout)
+        {
+            vX = 1;
+        } else
+        {
+            vX = Random.Range(0, 2) == 0 ? -1 : 1;
+        }
+
+        //float vX = Random.Range(0, 2) == 0 ? -1 : 1;
         float vY = Random.Range(-1f, 1f);
         //Debug.Log(vX + ", " + vY);
 
