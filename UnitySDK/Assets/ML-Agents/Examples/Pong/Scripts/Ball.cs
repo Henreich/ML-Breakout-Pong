@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour {
     private float timeToReset = 120;
     private int maxBallBounces = 15;
     private int lives = 3;
+    private int numberOfBlocks = 0;
+    private int maxNumberOfBlocks;
     
     private GameObject Prefab_1_Obstacle;
     private GameObject Prefab_2_Obstacle;
@@ -48,6 +50,14 @@ public class Ball : MonoBehaviour {
         temp2 = Prefab_2_Obstacle.transform.position;
         temp3 = Prefab_3_Obstacle.transform.position;
         temp4 = Prefab_4_Obstacle.transform.position;
+
+        foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            if (gameObj.name.Contains("Obstacle")) numberOfBlocks++;
+        }
+        numberOfBlocks -= 4; // Correction for having four prefabs with obstacle in the name...
+        maxNumberOfBlocks = numberOfBlocks;
+        Debug.Log("Blocks: " + numberOfBlocks);
     }
 
 
@@ -58,14 +68,13 @@ public class Ball : MonoBehaviour {
             timeToReset -= Time.deltaTime;
 
             if (timeToReset < 0) ResetGame();
-              
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         ballBounces++;
-        //if (!playMode && ballBounces > maxBallBounces) ResetGame();
+        if (!playMode && !breakout && ballBounces > maxBallBounces) ResetGame();
         
         string collisionObjectName = (collision.gameObject.name.StartsWith("Obstacle"))  ? "Obstacle" : collision.gameObject.name;
 
@@ -73,13 +82,14 @@ public class Ball : MonoBehaviour {
         switch (collisionObjectName)
         {
             case "WallA":
+                agentA.AddReward(-0.5f);
+                //agentB.AddReward(0.5f);
+
                 if (breakout)
                 {
                     --lives;
                     if (lives == 0) ResetGame();
                 }
-                agentA.AddReward(-0.5f);
-                //agentB.AddReward(0.5f);
                 //agentB.score++;
                 //GameObject.Find("Score2").GetComponent<TextMesh>().text = "Score: " + agentB.score;
                 goalsLetIn++;
@@ -96,6 +106,8 @@ public class Ball : MonoBehaviour {
             //    break;
 
             case "PaddleAgentA":
+                agentA.AddReward(0.1f);
+
                 if (breakout)
                 {
                     // Taken from here:  https://answers.unity.com/questions/658533/setting-the-angle-of-a-ball-in-a-breakout-game.html
@@ -109,8 +121,6 @@ public class Ball : MonoBehaviour {
 
                 ballsTouched++;
                 ballBounces = 0;
-                agentA.AddReward(0.1f);
-                //if (ballsTouched % 5 == 0) ResetGame();
                 break;
 
             //case "PaddleAgentB":
@@ -122,6 +132,11 @@ public class Ball : MonoBehaviour {
                 //Debug.Log(obstacle.getReward());
                 agentA.AddReward(obstacle.getReward());
                 Destroy(collision.gameObject);
+                numberOfBlocks--;
+                //Debug.Log("Blocks:" + numberOfBlocks);
+
+                if (numberOfBlocks == 0) ResetGame();
+
                 break;
         }
         if (playMode)
@@ -134,23 +149,9 @@ public class Ball : MonoBehaviour {
 
     private void ResetGame()
     {
-        if (breakout && lives == 0)
-        {
-            // Destroy every Obstacle object...
-            foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
-            {
-                if (gameObj.name.Contains("Obstacle"))
-                {
-                    Destroy(gameObj);
-                }
-            }
-            // Re-instansiate and reset lives.
-            Instantiate(Resources.Load("Prefabs/1_Obstacle"), temp1, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/2_Obstacle"), temp2, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/3_Obstacle"), temp3, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/4_Obstacle"), temp4, Quaternion.identity);
-            lives = 3;
-        }
+
+        if (breakout) breakoutReset();
+
         timeToReset = 120;
         ballBounces = 0;
         // Round done, 
@@ -182,6 +183,39 @@ public class Ball : MonoBehaviour {
         //Debug.Log(vX + ", " + vY);
 
         GetComponent<Rigidbody>().velocity = new Vector3(vX * speed, vY * speed, 0f);
+    }
+
+    /**
+     * Method to reset the scene when playing breakout.
+     */
+    private void breakoutReset()
+    {
+        if (lives == 0 || numberOfBlocks == 0)
+        {
+            // No need to go through if no blocks are left.
+            if (numberOfBlocks > 0)
+            {
+                // Destroy every Obstacle object...
+                foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+                {
+                    if (gameObj.name.Contains("Obstacle"))
+                    {
+                        Destroy(gameObj);
+                    }
+                }
+
+            } else
+            {
+                numberOfBlocks = maxNumberOfBlocks;
+            }
+
+            // Re-instansiate and reset lives.
+            Instantiate(Resources.Load("Prefabs/1_Obstacle"), temp1, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/2_Obstacle"), temp2, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/3_Obstacle"), temp3, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/4_Obstacle"), temp4, Quaternion.identity);
+            lives = 3;
+        }
     }
 }
 
