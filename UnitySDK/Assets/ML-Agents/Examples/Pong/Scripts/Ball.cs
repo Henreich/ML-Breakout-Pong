@@ -8,11 +8,18 @@ public class Ball : MonoBehaviour {
     private float timeToReset = 120;
     private int maxBallBounces = 15;
     private int lives = 3;
-
-    public GameObject prefabObstacle1;
     
-    public GameObject gameobjectPaddleA;
+    private GameObject Prefab_1_Obstacle;
+    private GameObject Prefab_2_Obstacle;
+    private GameObject Prefab_3_Obstacle;
+    private GameObject Prefab_4_Obstacle;
+    private Vector3 temp1;
+    private Vector3 temp2;
+    private Vector3 temp3;
+    private Vector3 temp4;
 
+
+    public GameObject gameobjectPaddleA;
     public PaddleAgent agentA;
     //public PaddleAgent agentB;
     public float speed;
@@ -32,6 +39,15 @@ public class Ball : MonoBehaviour {
         //agentB = agentB.GetComponent<PaddleAgent>();
         startPos = this.transform.position;
         ballRb = GetComponent<Rigidbody>();
+
+        Prefab_1_Obstacle = GameObject.Find("1_Obstacle");
+        Prefab_2_Obstacle = GameObject.Find("2_Obstacle");
+        Prefab_3_Obstacle = GameObject.Find("3_Obstacle");
+        Prefab_4_Obstacle = GameObject.Find("4_Obstacle");
+        temp1 = Prefab_1_Obstacle.transform.position;
+        temp2 = Prefab_2_Obstacle.transform.position;
+        temp3 = Prefab_3_Obstacle.transform.position;
+        temp4 = Prefab_4_Obstacle.transform.position;
     }
 
 
@@ -49,7 +65,7 @@ public class Ball : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         ballBounces++;
-        if (!playMode && ballBounces > maxBallBounces) ResetGame();
+        //if (!playMode && ballBounces > maxBallBounces) ResetGame();
         
         string collisionObjectName = (collision.gameObject.name.StartsWith("Obstacle"))  ? "Obstacle" : collision.gameObject.name;
 
@@ -59,7 +75,7 @@ public class Ball : MonoBehaviour {
             case "WallA":
                 if (breakout)
                 {
-                    lives--;
+                    --lives;
                     if (lives == 0) ResetGame();
                 }
                 agentA.AddReward(-0.5f);
@@ -118,17 +134,33 @@ public class Ball : MonoBehaviour {
 
     private void ResetGame()
     {
+        if (breakout && lives == 0)
+        {
+            // Destroy every Obstacle object...
+            foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (gameObj.name.Contains("Obstacle"))
+                {
+                    Destroy(gameObj);
+                }
+            }
+            // Re-instansiate and reset lives.
+            Instantiate(Resources.Load("Prefabs/1_Obstacle"), temp1, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/2_Obstacle"), temp2, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/3_Obstacle"), temp3, Quaternion.identity);
+            Instantiate(Resources.Load("Prefabs/4_Obstacle"), temp4, Quaternion.identity);
+            lives = 3;
+        }
         timeToReset = 120;
-        lives = 3;
         ballBounces = 0;
         // Round done, 
         agentA.Done();
         //agentB.Done();
 
-        // Reset ball to (0, 0, 0)
+        // Reset ball to its starting position
         this.transform.position = startPos;
-        if (lives == 0) Instantiate(prefabObstacle1, transform.position, Quaternion.identity);
         SetBallVelocity();
+        //if (lives == 0) Instantiate(prefabObstacle1, transform.position, Quaternion.identity);
     }
 
     private void SetBallVelocity()
@@ -162,3 +194,6 @@ public class Ball : MonoBehaviour {
 //GetComponent<Rigidbody>().velocity = new Vector3((speed* sx) + randomnessDirectionX, (speed* sy) + randomnessDirectionY, 0f);
 
 //         float sy = Random.Range(-1, 2);                     // Move in positive, neutral or negative Y.
+
+
+

@@ -18,7 +18,7 @@ public class PaddleAgent : Agent {
     private Rigidbody ballRb;
     //private float distanceToEdge = 4.25f; // Pong / Breakout
     //private float distanceToEdge = 11f; // Pong Big
-    private float distanceToEdge = 9.25f; // Pong Breakout Big
+    private float distanceToEdge = 9.5f; // Pong Breakout Big
 
     public override void InitializeAgent()
     {
