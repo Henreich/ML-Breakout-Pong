@@ -5,12 +5,6 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
     private Vector3 startPos;
     private Rigidbody ballRb;
-    private float timeToReset = 120;
-    private int maxBallBounces = 15;
-    private int lives = 3;
-    private int numberOfBlocks = 0;
-    private int maxNumberOfBlocks;
-    
     private GameObject Prefab_1_Obstacle;
     private GameObject Prefab_2_Obstacle;
     private GameObject Prefab_3_Obstacle;
@@ -19,8 +13,13 @@ public class Ball : MonoBehaviour {
     private Vector3 temp2;
     private Vector3 temp3;
     private Vector3 temp4;
-
-
+    private float timeToReset  = 60;    // How much time until soft-resetting the game
+    private int maxBallBounces = 15;    // Amount of times the ball can bounce without touching the paddle, bricks or goal.
+    private int lives = 3;              // Number of lives before hard-resetting the game
+    private int numberOfBlocks = 0;
+    private int maxNumberOfBlocks;
+    
+    // Public, to watch in the editor.
     public GameObject gameobjectPaddleA;
     public PaddleAgent agentA;
     //public PaddleAgent agentB;
@@ -42,22 +41,26 @@ public class Ball : MonoBehaviour {
         startPos = this.transform.position;
         ballRb = GetComponent<Rigidbody>();
 
-        Prefab_1_Obstacle = GameObject.Find("1_Obstacle");
-        Prefab_2_Obstacle = GameObject.Find("2_Obstacle");
-        Prefab_3_Obstacle = GameObject.Find("3_Obstacle");
-        Prefab_4_Obstacle = GameObject.Find("4_Obstacle");
-        temp1 = Prefab_1_Obstacle.transform.position;
-        temp2 = Prefab_2_Obstacle.transform.position;
-        temp3 = Prefab_3_Obstacle.transform.position;
-        temp4 = Prefab_4_Obstacle.transform.position;
-
-        foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+        if (breakout)
         {
-            if (gameObj.name.Contains("Obstacle")) numberOfBlocks++;
+            Prefab_1_Obstacle = GameObject.Find("1_Obstacle");
+            Prefab_2_Obstacle = GameObject.Find("2_Obstacle");
+            Prefab_3_Obstacle = GameObject.Find("3_Obstacle");
+            Prefab_4_Obstacle = GameObject.Find("4_Obstacle");
+            temp1 = Prefab_1_Obstacle.transform.position;
+            temp2 = Prefab_2_Obstacle.transform.position;
+            temp3 = Prefab_3_Obstacle.transform.position;
+            temp4 = Prefab_4_Obstacle.transform.position;
+
+            foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (gameObj.name.Contains("Obstacle")) numberOfBlocks++;
+            }
+            numberOfBlocks -= 4; // Correction for having four prefabs with obstacle in the name...
+            maxNumberOfBlocks = numberOfBlocks;
+            //Debug.Log("Blocks: " + numberOfBlocks);
         }
-        numberOfBlocks -= 4; // Correction for having four prefabs with obstacle in the name...
-        maxNumberOfBlocks = numberOfBlocks;
-        Debug.Log("Blocks: " + numberOfBlocks);
+
     }
 
 
@@ -74,7 +77,7 @@ public class Ball : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         ballBounces++;
-        if (!playMode && !breakout && ballBounces > maxBallBounces) ResetGame();
+        if (!playMode && ballBounces > maxBallBounces) ResetGame();
         
         string collisionObjectName = (collision.gameObject.name.StartsWith("Obstacle"))  ? "Obstacle" : collision.gameObject.name;
 
@@ -133,6 +136,7 @@ public class Ball : MonoBehaviour {
                 agentA.AddReward(obstacle.getReward());
                 Destroy(collision.gameObject);
                 numberOfBlocks--;
+                ballBounces = 0;
                 //Debug.Log("Blocks:" + numberOfBlocks);
 
                 if (numberOfBlocks == 0) ResetGame();

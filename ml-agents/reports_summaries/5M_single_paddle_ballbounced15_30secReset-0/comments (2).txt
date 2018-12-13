@@ -1,0 +1,10 @@
+max_steps: 6 327 001 / 15 000 000
+reset: 30 seconds
+ballstouched: 15
+single paddle
+
+
+
+Paddle seem to still favour waiting in the top or bottom. 
+Might be because the reward for letting a goal in is the same as hitting the ball, 
+meaning it might get enough reward by simply catching half of the balls.

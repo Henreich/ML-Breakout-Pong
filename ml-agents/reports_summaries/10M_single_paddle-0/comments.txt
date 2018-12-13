@@ -1,0 +1,4 @@
+No significant improvements until 1.5M iterations. Was originally trained until 1M iterations, where it started
+showing signs of improvement. In this run the game was reset every time the paddle managed to hit the ball or
+the ball went into the goal. Almost reached "perfection" after 10M runs as the reward for hitting the ball
+each time was set to 0.1

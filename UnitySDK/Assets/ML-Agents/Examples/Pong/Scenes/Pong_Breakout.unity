@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   broadcast: 1
-  graphModel: {fileID: 4900000, guid: 07f657a51546a874a9307a9262b94614, type: 3}
+  graphModel: {fileID: 4900000, guid: 8daf69a747d820d4181abc45771c541e, type: 3}
   graphScope: 
   graphPlaceholders: []
   BatchSizePlaceholderName: batch_size
@@ -746,7 +746,7 @@ GameObject:
   - component: {fileID: 1370725920}
   - component: {fileID: 1370725921}
   m_Layer: 0
-  m_Name: Brain
+  m_Name: BreakoutBrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
     vectorActionDescriptions:
     - Up/down
     vectorActionSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 1412418836}
   - {fileID: 1062330430}
