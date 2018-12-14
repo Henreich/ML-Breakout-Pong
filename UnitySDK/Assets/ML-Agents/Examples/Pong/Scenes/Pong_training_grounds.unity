@@ -283,6 +283,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 23162170}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &28040815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
+  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  broadcast: 1
+  brain: {fileID: 1370725921}
 --- !u!1 &39138034
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +861,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 219831738}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -1040,6 +1055,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 2040785174}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -1872,6 +1889,37 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170676866}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &173366585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
+  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  broadcast: 1
+  keyContinuousPlayerActions:
+  - key: 273
+    index: 0
+    value: 1
+  - key: 274
+    index: 0
+    value: -1
+  - key: 0
+    index: 0
+    value: 0
+  axisContinuousPlayerActions: []
+  discretePlayerActions:
+  - key: 273
+    branchIndex: 0
+    value: 1
+  - key: 274
+    branchIndex: 0
+    value: -1
+  brain: {fileID: 1370725921}
 --- !u!1 &188964057
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2145,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1591587889}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -2397,14 +2447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 95362495}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &219831741
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3682,6 +3732,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1616937628}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -3982,14 +4034,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 483974322}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &309257804
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4395,14 +4447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1828744153}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &377678788
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4718,6 +4770,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1010685766}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -5087,6 +5141,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1628724080}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -5334,6 +5390,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1532760444}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -5459,6 +5517,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 309257801}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -5589,14 +5649,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1467739979}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &500243015
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5751,19 +5811,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 514546902}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &535709003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
-  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  broadcast: 1
-  brain: {fileID: 1370725921}
 --- !u!1 &552200746
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,29 +6475,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 615829784}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &672911785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
-  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  broadcast: 1
-  graphModel: {fileID: 4900000, guid: 6b4751db11e00fc42b5b19f81d3d8f7a, type: 3}
-  graphScope: 
-  graphPlaceholders: []
-  BatchSizePlaceholderName: batch_size
-  VectorObservationPlacholderName: vector_observation
-  RecurrentInPlaceholderName: recurrent_in
-  RecurrentOutPlaceholderName: recurrent_out
-  VisualObservationPlaceholderName: []
-  ActionPlaceholderName: action
-  PreviousActionPlaceholderName: prev_action
-  brain: {fileID: 1370725921}
 --- !u!1 &681088051
 GameObject:
   m_ObjectHideFlags: 0
@@ -6495,14 +6519,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1579176986}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &681088054
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6611,6 +6635,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1584589483}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -6741,14 +6767,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1703136869}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &701416598
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6857,6 +6883,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1913764844}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -7957,6 +7985,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1563282083}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -8561,6 +8591,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 977168053}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &990253173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
+  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  brain: {fileID: 1370725921}
 --- !u!1 &992018885
 GameObject:
   m_ObjectHideFlags: 0
@@ -8775,14 +8817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 383930163}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1010685769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9406,14 +9448,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1581678895}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1075775001
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9568,6 +9610,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1106446970}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1127711479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
+  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  broadcast: 1
+  graphModel: {fileID: 4900000, guid: 6b4751db11e00fc42b5b19f81d3d8f7a, type: 3}
+  graphScope: 
+  graphPlaceholders: []
+  BatchSizePlaceholderName: batch_size
+  VectorObservationPlacholderName: vector_observation
+  RecurrentInPlaceholderName: recurrent_in
+  RecurrentOutPlaceholderName: recurrent_out
+  VisualObservationPlaceholderName: []
+  ActionPlaceholderName: action
+  PreviousActionPlaceholderName: prev_action
+  brain: {fileID: 1370725921}
 --- !u!1 &1131230176
 GameObject:
   m_ObjectHideFlags: 0
@@ -9612,14 +9677,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 2115604309}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1131230179
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10965,14 +11030,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 2089881413}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1337140684
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11363,11 +11428,11 @@ MonoBehaviour:
     vectorActionSpaceType: 1
   brainType: 2
   CoreBrains:
-  - {fileID: 1849476110}
-  - {fileID: 535709003}
-  - {fileID: 1945913971}
-  - {fileID: 672911785}
-  instanceID: 13382
+  - {fileID: 173366585}
+  - {fileID: 28040815}
+  - {fileID: 990253173}
+  - {fileID: 1127711479}
+  instanceID: 17804
 --- !u!1 &1387241900
 GameObject:
   m_ObjectHideFlags: 0
@@ -11497,14 +11562,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1533801490}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1387326277
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11990,6 +12055,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 2092150852}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -12115,6 +12182,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 500243012}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -12622,14 +12691,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 476900182}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1532760447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12738,6 +12807,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1387326274}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -13038,14 +13109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 904858152}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1563282086
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13324,6 +13395,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 681088051}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -13449,6 +13522,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1075774998}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -13579,14 +13654,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 691526393}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1584589486
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13785,14 +13860,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 206348451}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1591587892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13991,14 +14066,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 294780952}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1616937631
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14112,14 +14187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 433515597}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1628724083
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14666,6 +14741,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 701416595}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -15683,6 +15760,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 377678785}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -15976,37 +16055,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1849476110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
-  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  broadcast: 1
-  keyContinuousPlayerActions:
-  - key: 273
-    index: 0
-    value: 1
-  - key: 274
-    index: 0
-    value: -1
-  - key: 0
-    index: 0
-    value: 0
-  axisContinuousPlayerActions: []
-  discretePlayerActions:
-  - key: 273
-    branchIndex: 0
-    value: 1
-  - key: 274
-    branchIndex: 0
-    value: -1
-  brain: {fileID: 1370725921}
 --- !u!1 &1859200624
 GameObject:
   m_ObjectHideFlags: 0
@@ -16417,14 +16465,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 704115245}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &1913764847
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16579,18 +16627,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1928823838}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1945913971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
-  m_Name: (Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  brain: {fileID: 1370725921}
 --- !u!1 &1953959616
 GameObject:
   m_ObjectHideFlags: 0
@@ -17488,14 +17524,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 96386597}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &2040785176
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17994,6 +18030,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1337140681}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
@@ -18124,14 +18162,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aae5762b942c9440a9882354de1c006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lastHitBy: 0
+  gameobjectPaddleA: {fileID: 0}
   agentA: {fileID: 1465569155}
-  startPos: {x: 0, y: 0, z: 0}
+  speed: 5
   goalsLetIn: 0
   ballsTouched: 0
   ballBounces: 0
   playMode: 0
+  breakout: 0
 --- !u!54 &2092150855
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18240,6 +18278,8 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   ball: {fileID: 1131230176}
+  wallTop: {fileID: 0}
+  wallBottom: {fileID: 0}
   speed: 5
   score: 0
   isAgentA: 1
