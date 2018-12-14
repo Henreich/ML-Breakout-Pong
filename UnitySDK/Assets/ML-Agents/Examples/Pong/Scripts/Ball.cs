@@ -5,14 +5,20 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
     private Vector3 startPos;
     private Rigidbody ballRb;
-    private GameObject Prefab_1_Obstacle;
-    private GameObject Prefab_2_Obstacle;
-    private GameObject Prefab_3_Obstacle;
-    private GameObject Prefab_4_Obstacle;
-    private Vector3 temp1;
-    private Vector3 temp2;
-    private Vector3 temp3;
-    private Vector3 temp4;
+    //private GameObject Prefab_1_Obstacle;
+    //private GameObject Prefab_2_Obstacle;
+    //private GameObject Prefab_3_Obstacle;
+    //private GameObject Prefab_4_Obstacle;
+    //private Vector3 temp1;
+    //private Vector3 temp2;
+    //private Vector3 temp3;
+    //private Vector3 temp4;
+    private GameObject prefabObstaclesLeft;
+    private GameObject prefabObstaclesRight;
+    private GameObject prefabObstaclesImitator;
+    private Vector3 prefabObstaclesLeftPosition;
+    private Vector3 prefabObstaclesRightPosition;
+    private Vector3 prefabObstaclesImitatorPosition;
     private float timeToReset  = 60;    // How much time until soft-resetting the game
     private int maxBallBounces = 15;    // Amount of times the ball can bounce without touching the paddle, bricks or goal.
     private int lives = 3;              // Number of lives before hard-resetting the game
@@ -32,6 +38,8 @@ public class Ball : MonoBehaviour {
     // Flags
     public bool playMode; // Is the game being played by a player or a model?
     public bool breakout; // Breakout or pong?
+    public bool playerTwo; // Is player two present?
+    public bool imitator;
 
 	// Use this for initialization
 	void Start () {
@@ -43,20 +51,37 @@ public class Ball : MonoBehaviour {
 
         if (breakout)
         {
-            Prefab_1_Obstacle = GameObject.Find("1_Obstacle");
-            Prefab_2_Obstacle = GameObject.Find("2_Obstacle");
-            Prefab_3_Obstacle = GameObject.Find("3_Obstacle");
-            Prefab_4_Obstacle = GameObject.Find("4_Obstacle");
-            temp1 = Prefab_1_Obstacle.transform.position;
-            temp2 = Prefab_2_Obstacle.transform.position;
-            temp3 = Prefab_3_Obstacle.transform.position;
-            temp4 = Prefab_4_Obstacle.transform.position;
+            //Prefab_1_Obstacle = GameObject.Find("1_Obstacle");
+            //Prefab_2_Obstacle = GameObject.Find("2_Obstacle");
+            //Prefab_3_Obstacle = GameObject.Find("3_Obstacle");
+            //Prefab_4_Obstacle = GameObject.Find("4_Obstacle");
+            //temp1 = Prefab_1_Obstacle.transform.position;
+            //temp2 = Prefab_2_Obstacle.transform.position;
+            //temp3 = Prefab_3_Obstacle.transform.position;
+            //temp4 = Prefab_4_Obstacle.transform.position;
+            prefabObstaclesLeft = GameObject.Find("Obstacles_Left");
+            prefabObstaclesLeftPosition = prefabObstaclesLeft.transform.position;
 
-            foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+            if (playerTwo)
             {
-                if (gameObj.name.Contains("Obstacle")) numberOfBlocks++;
+                prefabObstaclesRight = GameObject.Find("Obstacles_Right");
+                prefabObstaclesRightPosition = prefabObstaclesRight.transform.position;
             }
-            numberOfBlocks -= 4; // Correction for having four prefabs with obstacle in the name...
+
+            if (imitator)
+            {
+                prefabObstaclesImitator = GameObject.Find("Obstacles_Imitation");
+                prefabObstaclesImitatorPosition = prefabObstaclesImitator.transform.position;
+            }
+
+            //foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
+            //{
+            //    if (gameObj.name.Contains("Obstacle")) numberOfBlocks++;
+            //}
+            numberOfBlocks = 44; // Hardcoded for now. Naming makes it difficult to pin down
+                                 // which arean one brick is on. Maybe this should be stored within
+                                 // the individual brick... or maybe implement a better game manager
+                                 // system.
             maxNumberOfBlocks = numberOfBlocks;
             //Debug.Log("Blocks: " + numberOfBlocks);
         }
@@ -85,7 +110,7 @@ public class Ball : MonoBehaviour {
         switch (collisionObjectName)
         {
             case "WallA":
-                agentA.AddReward(-0.5f);
+                agentA.AddReward(-0.1f);
                 //agentB.AddReward(0.5f);
 
                 if (breakout)
@@ -109,7 +134,7 @@ public class Ball : MonoBehaviour {
             //    break;
 
             case "PaddleAgentA":
-                agentA.AddReward(0.1f);
+                agentA.AddReward(0.5f);
 
                 if (breakout)
                 {
@@ -138,7 +163,7 @@ public class Ball : MonoBehaviour {
                 numberOfBlocks--;
                 ballBounces = 0;
                 //Debug.Log("Blocks:" + numberOfBlocks);
-
+                //if (!imitator && !playerTwo) Debug.Log(numberOfBlocks);
                 if (numberOfBlocks == 0) ResetGame();
 
                 break;
@@ -176,7 +201,14 @@ public class Ball : MonoBehaviour {
 
         if(breakout)
         {
-            vX = 1;
+            if (!playerTwo)
+            {
+                vX = 1;
+            } else
+            {
+                vX = -1;
+            }
+            
         } else
         {
             vX = Random.Range(0, 2) == 0 ? -1 : 1;
@@ -199,25 +231,44 @@ public class Ball : MonoBehaviour {
             // No need to go through if no blocks are left.
             if (numberOfBlocks > 0)
             {
-                // Destroy every Obstacle object...
+                // Destroy ObstacleLeft or the clones.
+                // TODO: Refactor.
                 foreach (GameObject gameObj in GameObject.FindObjectsOfType<GameObject>())
                 {
-                    if (gameObj.name.Contains("Obstacle"))
+                    if (gameObj.name.Contains("Obstacles_Left") && !imitator)
+                    {
+                        Destroy(gameObj);
+                    } else if (playerTwo && gameObj.name.Contains("Obstacles_Right"))
+                    {
+                        Destroy(gameObj);
+                    } else if (imitator && gameObj.name.Contains("Obstacles_Imitation"))
                     {
                         Destroy(gameObj);
                     }
                 }
 
-            } else
+            }
+            else
             {
                 numberOfBlocks = maxNumberOfBlocks;
             }
 
             // Re-instansiate and reset lives.
-            Instantiate(Resources.Load("Prefabs/1_Obstacle"), temp1, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/2_Obstacle"), temp2, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/3_Obstacle"), temp3, Quaternion.identity);
-            Instantiate(Resources.Load("Prefabs/4_Obstacle"), temp4, Quaternion.identity);
+            //Instantiate(Resources.Load("Prefabs/1_Obstacle"), temp1, Quaternion.identity);
+            //Instantiate(Resources.Load("Prefabs/2_Obstacle"), temp2, Quaternion.identity);
+            //Instantiate(Resources.Load("Prefabs/3_Obstacle"), temp3, Quaternion.identity);
+            //Instantiate(Resources.Load("Prefabs/4_Obstacle"), temp4, Quaternion.identity);
+
+            if (playerTwo)
+            {
+                Instantiate(Resources.Load("Prefabs/Obstacles_Right"), prefabObstaclesRightPosition, Quaternion.identity);
+            } else if (imitator)
+            {
+                Instantiate(Resources.Load("Prefabs/Obstacles_Imitation"), prefabObstaclesImitatorPosition, Quaternion.identity);
+            } else
+            {
+                Instantiate(Resources.Load("Prefabs/Obstacles_Left"), prefabObstaclesLeftPosition, Quaternion.identity);
+            }
             lives = 3;
         }
     }

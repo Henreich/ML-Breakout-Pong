@@ -14,8 +14,10 @@ namespace MLAgents
 
         bool recordExperiences;
         bool resetBuffer;
+        bool timedReset;
         Agent myAgent;
         float bufferResetTime;
+        float timeToReset = 60;
 
         public KeyCode recordKey = KeyCode.R;
         public KeyCode resetKey = KeyCode.C;
@@ -25,6 +27,7 @@ namespace MLAgents
         {
             recordExperiences = true;
             resetBuffer = false;
+            timedReset = false;
             myAgent = GetComponent<Agent>();
             bufferResetTime = Time.time;
         }
@@ -32,15 +35,22 @@ namespace MLAgents
         // Update is called once per frame
         void Update()
         {
+
+            timeToReset -= Time.deltaTime;
+            if (timeToReset < 0) timedReset = true;
+
             if (Input.GetKeyDown(recordKey))
             {
                 recordExperiences = !recordExperiences;
             }
 
-            if (Input.GetKeyDown(resetKey))
+            if (Input.GetKeyDown(resetKey) || timedReset)
             {
                 resetBuffer = true;
                 bufferResetTime = Time.time;
+                Debug.Log("resetting buffer...");
+                timedReset = false;
+                timeToReset = 60;
             }
             else
             {
