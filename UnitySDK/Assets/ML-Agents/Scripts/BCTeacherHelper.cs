@@ -44,7 +44,7 @@ namespace MLAgents
                 recordExperiences = !recordExperiences;
             }
 
-            if (Input.GetKeyDown(resetKey) || timedReset)
+            if (Input.GetKeyDown(resetKey) )
             {
                 resetBuffer = true;
                 bufferResetTime = Time.time;
