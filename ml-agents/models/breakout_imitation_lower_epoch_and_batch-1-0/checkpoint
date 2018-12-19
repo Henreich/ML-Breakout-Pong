@@ -1,2 +1,3 @@
-model_checkpoint_path: "model-19770.cptk"
-all_model_checkpoint_paths: "model-19770.cptk"
+model_checkpoint_path: "model-95911.cptk"
+all_model_checkpoint_paths: "model-50000.cptk"
+all_model_checkpoint_paths: "model-95911.cptk"
